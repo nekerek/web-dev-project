@@ -1,0 +1,35 @@
+<div class="container login-container">
+      <div class="login-card">
+        <h2>Create an Account</h2>
+        @if (errorMessage) {
+          <div class="error-alert">{{ errorMessage }}</div>
+        }
+        <form (ngSubmit)="register()" #registerForm="ngForm">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" [(ngModel)]="userData.username" required class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email (optional)</label>
+            <input type="email" id="email" name="email" [(ngModel)]="userData.email" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" [(ngModel)]="userData.password" required class="form-control" minlength="4" />
+          </div>
+          <div class="form-group">
+            <label for="role">Account Type</label>
+            <select id="role" name="role" [(ngModel)]="userData.role" class="form-control">
+              <option value="user">Regular User (Buy Tickets)</option>
+              <option value="admin">Event Organizer (Create Events)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="!registerForm.form.valid || isLoading">
+            {{ isLoading ? 'Creating account...' : 'Register' }}
+          </button>
+        </form>
+        <p class="text-center mt-3" style="font-size: 0.9rem;">
+          Already have an account? <a routerLink="/login">Log in here</a>.
+        </p>
+      </div>
+    </div>

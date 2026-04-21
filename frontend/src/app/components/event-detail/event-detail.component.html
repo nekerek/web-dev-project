@@ -1,0 +1,79 @@
+@if (isLoading()) {
+      <div class="container text-center mt-5">
+        <h2>Loading event details...</h2>
+      </div>
+    } @else if (errorMessage()) {
+      <div class="container mt-5">
+        <div class="error-alert">{{ errorMessage() }}</div>
+      </div>
+    } @else if (event()) {
+      <div class="event-hero" [style.backgroundImage]="'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(' + (event()?.image || '/assets/placeholder.jpg') + ')'">
+        <div class="container text-center text-white hero-inner">
+          <div class="category-badge mb-2">{{ event()?.category?.name }}</div>
+          <h1>{{ event()?.title }}</h1>
+          <p class="lead">{{ event()?.date | date:'fullDate' }} at {{ event()?.date | date:'shortTime' }}</p>
+        </div>
+      </div>
+      
+      <div class="container mt-4">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card p-4">
+              <h3 class="mb-3">About this event</h3>
+              <p class="event-desc">{{ event()?.description }}</p>
+              
+              <h4 class="mt-4 mb-2">Location</h4>
+              <p>📍 {{ event()?.location }}</p>
+              
+              <h4 class="mt-4 mb-2">Organizer</h4>
+              <p>👤 {{ event()?.organizer }}</p>
+              @if (event()?.organization) {
+                <p>🏢 {{ event()?.organization }}</p>
+              }
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="card ticket-card">
+              <h3 class="price-tag">{{ event()?.price | currency:'KZT':'symbol-narrow' }}</h3>
+              <div class="seats-status mb-3">
+                <div class="progress-bar-bg">
+                  <div class="progress-bar" [style.width]="(event()!.available_seats / event()!.total_seats) * 100 + '%'" [class.low]="event()!.available_seats < event()!.total_seats * 0.2"></div>
+                </div>
+                <p class="text-muted mt-1">{{ event()?.available_seats }} seats available out of {{ event()?.total_seats }}</p>
+              </div>
+              
+              @if (authService.isLoggedIn()) {
+                <div class="purchase-form">
+                  <div class="form-group mb-3">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" [(ngModel)]="quantity" min="1" [max]="event()!.available_seats" class="form-control" />
+                  </div>
+                  
+                  <div class="total-price mb-3 d-flex justify-between">
+                    <span>Total:</span>
+                    <strong>{{ (+event()!.price * quantity) | currency:'KZT':'symbol-narrow' }}</strong>
+                  </div>
+                  
+                  @if (purchaseError) {
+                    <div class="error-alert small">{{ purchaseError }}</div>
+                  }
+                  @if (purchaseSuccess) {
+                    <div class="success-alert small">Order placed successfully!</div>
+                  }
+                  
+                  <button class="btn btn-primary btn-block btn-lg" (click)="buyTicket()" [disabled]="isPurchasing || event()!.available_seats < quantity || quantity < 1">
+                    {{ isPurchasing ? 'Processing...' : 'Buy Tickets' }}
+                  </button>
+                </div>
+              } @else {
+                <div class="alert alert-info">
+                  Please log in to purchase tickets.
+                </div>
+                <button class="btn btn-primary btn-block" (click)="goToLogin()">Log In</button>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }

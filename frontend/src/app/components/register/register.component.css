@@ -1,0 +1,14 @@
+.login-container { display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 2rem 0; }
+    .login-card { background: var(--card-bg); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 450px; border: 1px solid var(--border-color); color: var(--text-color); }
+    .login-card h2 { text-align: center; color: var(--primary-color); margin-top: 0; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+    .form-control { width: 100%; padding: 0.75rem; border: 1px solid var(--input-border); border-radius: 4px; box-sizing: border-box; background: var(--input-bg); color: var(--text-color); }
+    .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(0,53,128,0.2); }
+    .btn-block { display: block; width: 100%; font-size: 1.1rem; padding: 0.75rem; }
+    .btn-primary { background-color: var(--primary-color); color: white; border: none; border-radius: 4px; cursor: pointer; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .error-alert { padding: 1rem; background-color: var(--alert-bg); color: var(--alert-text); border-radius: 4px; margin-bottom: 1rem; border-left: 4px solid #d32f2f; }
+    .text-center { text-align: center; }
+    .mt-4 { margin-top: 1.5rem; }
+    .mt-3 { margin-top: 1rem; }

@@ -1,0 +1,54 @@
+<div class="container mt-4">
+      <div class="page-header">
+        <div>
+          <h2>Notifications</h2>
+          <p class="text-muted">Recent updates about your orders and managed events.</p>
+        </div>
+        <button class="btn btn-outline" (click)="markAllAsRead()" [disabled]="isLoading || notifications.length === 0">
+          Mark all as read
+        </button>
+      </div>
+
+      <div class="card p-4 mt-3 filter-card">
+        <label for="kindFilter">Filter</label>
+        <select id="kindFilter" name="kindFilter" [(ngModel)]="kindFilter" class="form-control">
+          <option value="all">All notifications</option>
+          <option value="order">Orders</option>
+          <option value="event">Managed events</option>
+        </select>
+      </div>
+
+      @if (errorMessage) {
+        <div class="error-alert mt-3">{{ errorMessage }}</div>
+      }
+
+      @if (isLoading) {
+        <div class="card p-4 text-center mt-3">Loading notifications...</div>
+      } @else if (filteredNotifications.length === 0) {
+        <div class="card p-4 text-center mt-3">
+          <p class="text-muted">You have no notifications in this filter.</p>
+        </div>
+      } @else {
+        <div class="notifications-list mt-3">
+          @for (item of filteredNotifications; track item.id) {
+            <article class="card p-4 notification-card" [class.notification-read]="item.is_read">
+              <div class="notification-top">
+                <div>
+                  <span class="pill" [class.pill-event]="item.kind === 'event'">
+                    {{ item.kind === 'event' ? 'Event' : 'Order' }}
+                  </span>
+                  <h3>{{ item.title }}</h3>
+                </div>
+                <small class="text-muted">{{ item.created_at | date:'medium' }}</small>
+              </div>
+              <p>{{ item.message }}</p>
+              @if (item.action_route) {
+                <a [routerLink]="item.action_route" class="btn btn-link">
+                  {{ item.action_label || 'Open' }}
+                </a>
+              }
+            </article>
+          }
+        </div>
+      }
+    </div>

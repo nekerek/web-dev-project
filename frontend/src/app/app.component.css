@@ -1,0 +1,6 @@
+main { min-height: calc(100vh - 160px); }
+    .mt-5 { margin-top: 3rem; }
+    .py-4 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+    .text-center { text-align: center; }
+    .text-muted { color: var(--muted-text); }
+    .border-top { border-top: 1px solid var(--hero-line); background: var(--surface-elevated); }

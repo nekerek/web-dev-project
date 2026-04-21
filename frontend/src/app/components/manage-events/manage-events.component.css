@@ -1,0 +1,38 @@
+.mb-4 { margin-bottom: 1.5rem; }
+    .mt-4 { margin-top: 1.5rem; }
+    .mt-3 { margin-top: 1rem; }
+    .mb-5 { margin-bottom: 3rem; }
+    .p-4 { padding: 1.5rem; }
+    .text-center { text-align: center; }
+    .d-flex { display: flex; }
+    .justify-between { justify-content: space-between; }
+    .align-items-center { align-items: center; }
+    .text-muted { color: var(--muted-text); }
+
+    .no-events { padding: 4rem 2rem; background: var(--card-bg); border-radius: 8px; border: 1px dashed var(--border-color); }
+    .no-events h3 { color: var(--primary-color); margin-top: 0; }
+
+    .table-responsive { overflow-x: auto; background: var(--card-bg); border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid var(--border-color); color: var(--text-color); }
+    .table { width: 100%; border-collapse: collapse; }
+    .table th, .table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border-color); }
+    .table th { background-color: var(--table-header); font-weight: bold; color: var(--text-color); }
+    .table tbody tr:hover { background-color: var(--table-hover); }
+
+    .badge { padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; color: white; }
+    .bg-success { background-color: #28a745; }
+    .bg-secondary { background-color: #6c757d; }
+
+    .btn { padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; text-decoration: none; font-weight: bold; border: none; display: inline-block; }
+    .btn-primary { background-color: var(--primary-color); color: white; }
+    .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.875rem; }
+    .btn-group { display: flex; gap: 0.5rem; }
+
+    .btn-outline-primary { color: var(--primary-color); border: 1px solid var(--primary-color); background: transparent; }
+    .btn-outline-primary:hover { color: white; background: var(--primary-color); }
+    .btn-outline-info { color: #17a2b8; border: 1px solid #17a2b8; background: transparent; }
+    .btn-outline-info:hover { color: white; background: #17a2b8; }
+    .btn-outline-danger { color: #dc3545; border: 1px solid #dc3545; background: transparent; }
+    .btn-outline-danger:hover { color: white; background: #dc3545; }
+
+    .error-alert { padding: 1rem; background-color: var(--alert-bg); color: var(--alert-text); border-radius: 4px; margin-bottom: 1rem; border-left: 4px solid #d32f2f; }
+    .success-alert { padding: 1rem; background-color: rgba(40, 167, 69, 0.12); color: #1d6b33; border-radius: 4px; margin-bottom: 1rem; border-left: 4px solid #28a745; }

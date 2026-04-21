@@ -1,0 +1,94 @@
+<div class="container mt-4">
+      <div class="page-header">
+        <div>
+          <h2>Settings</h2>
+          <p class="text-muted">Manage your profile and notification preferences.</p>
+        </div>
+      </div>
+
+      @if (isLoading) {
+        <div class="card p-4 mt-3">Loading your settings...</div>
+      } @else {
+        <form class="settings-grid mt-3" (ngSubmit)="saveSettings()" #settingsForm="ngForm">
+          <section class="card p-4">
+            <h3>Profile</h3>
+
+            @if (errorMessage) {
+              <div class="error-alert">{{ errorMessage }}</div>
+            }
+            @if (successMessage) {
+              <div class="success-alert">{{ successMessage }}</div>
+            }
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first_name">First name</label>
+                <input id="first_name" name="first_name" [(ngModel)]="profile.first_name" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="last_name">Last name</label>
+                <input id="last_name" name="last_name" [(ngModel)]="profile.last_name" class="form-control" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" [(ngModel)]="profile.email" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" [(ngModel)]="profile.phone" class="form-control" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="preferred_category_id">Favorite category</label>
+              <select
+                id="preferred_category_id"
+                name="preferred_category_id"
+                [(ngModel)]="profile.preferred_category_id"
+                class="form-control"
+              >
+                <option [ngValue]="null">No preference</option>
+                @for (category of categories; track category.id) {
+                  <option [ngValue]="category.id">{{ category.name }}</option>
+                }
+              </select>
+            </div>
+          </section>
+
+          <section class="card p-4">
+            <h3>Notifications</h3>
+
+            <label class="toggle-row">
+              <input type="checkbox" name="email_notifications" [(ngModel)]="profile.email_notifications" />
+              <span>
+                <strong>Email notifications</strong>
+                <small>Receive booking and account updates by email.</small>
+              </span>
+            </label>
+
+            <label class="toggle-row">
+              <input type="checkbox" name="event_reminders" [(ngModel)]="profile.event_reminders" />
+              <span>
+                <strong>Event reminders</strong>
+                <small>Get reminders before upcoming events you booked.</small>
+              </span>
+            </label>
+
+            <label class="toggle-row">
+              <input type="checkbox" name="marketing_updates" [(ngModel)]="profile.marketing_updates" />
+              <span>
+                <strong>Promotional updates</strong>
+                <small>See announcements about new campus events and offers.</small>
+              </span>
+            </label>
+
+            <button type="submit" class="btn btn-primary mt-4" [disabled]="isSaving || !settingsForm.form.valid">
+              {{ isSaving ? 'Saving...' : 'Save settings' }}
+            </button>
+          </section>
+        </form>
+      }
+    </div>

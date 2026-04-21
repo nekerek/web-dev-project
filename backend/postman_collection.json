@@ -117,7 +117,7 @@
       },
       "response": [{
         "name": "200 example",
-        "body": "[\n  {\"id\": 1, \"name\": \"Cinema\", \"slug\": \"cinema\", \"description\": \"Movie screenings\"},\n  {\"id\": 2, \"name\": \"Concerts\", \"slug\": \"concerts\", \"description\": \"Live music events\"}\n]"
+        "body": "[\n  {\"id\": 1, \"name\": \"Cinema\", \"slug\": \"cinema\", \"description\": \"Movie screenings\"},\n  {\"id\": 2, \"name\": \"Concerts\", \"slug\": \"concerts\", \"description\": \"Live music events\"},\n  {\"id\": 9, \"name\": \"Entertainment\", \"slug\": \"entertainment\", \"description\": \"General fun activities and mixed shows.\"},\n  {\"id\": 10, \"name\": \"Music\", \"slug\": \"music\", \"description\": \"DJ sets, jam sessions, and music nights.\"},\n  {\"id\": 11, \"name\": \"Gaming\", \"slug\": \"gaming\", \"description\": \"Esports, LAN parties, and gaming tournaments.\"}\n]"
       }]
     },
     {

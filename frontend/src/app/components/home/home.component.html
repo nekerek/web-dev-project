@@ -1,0 +1,64 @@
+<section class="home-shell">
+      <div class="container">
+        <div class="hero-panel">
+          <div class="hero-copy">
+            <p class="eyebrow">Campus Picks</p>
+            <h1>Discover student events in a cleaner marketplace-style layout.</h1>
+            <p class="hero-text">
+              Browse concerts, lectures, hackathons, workshops, and campus experiences with the same KBTU colors and booking flow.
+            </p>
+            <div class="hero-actions">
+              <a routerLink="/events" class="btn btn-primary">Browse Events</a>
+              <a routerLink="/notifications" class="btn btn-secondary">Notifications</a>
+            </div>
+          </div>
+          <div class="hero-note">
+            <div class="stat-card">
+              <strong>{{ featuredEvents.length }}</strong>
+              <span>featured cards</span>
+            </div>
+            <div class="stat-card accent">
+              <strong>New</strong>
+              <span>settings and alerts</span>
+            </div>
+          </div>
+        </div>
+
+        <section class="section-block">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Featured</p>
+              <h2>Popular Right Now</h2>
+            </div>
+            <a routerLink="/events" class="section-link">View all</a>
+          </div>
+
+          @if (errorMessage) {
+            <div class="error-alert">{{ errorMessage }}</div>
+          }
+
+          <div class="events-grid">
+            @for (event of featuredEvents; track event.id) {
+              <article class="event-card">
+                <a [routerLink]="['/events', event.id]" class="poster-link">
+                  <div class="card-img" [style.background-image]="'linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.4)), url(' + (event.image ? event.image : '/assets/placeholder.jpg') + ')'">
+                    <span class="age-tag">12+</span>
+                  </div>
+                </a>
+                <div class="card-body">
+                  <div class="category-badge">{{ event.category.name }}</div>
+                  <h3 class="card-title">{{ event.title }}</h3>
+                  <p class="card-date">{{ event.date | date:'medium' }}</p>
+                  <div class="price-pill">
+                    From {{ event.price | currency:'KZT':'symbol-narrow' }}
+                  </div>
+                </div>
+              </article>
+            }
+            @if (featuredEvents.length === 0 && !errorMessage) {
+              <p>No events found.</p>
+            }
+          </div>
+        </section>
+      </div>
+    </section>

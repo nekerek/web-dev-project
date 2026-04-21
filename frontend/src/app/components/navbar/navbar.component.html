@@ -1,0 +1,64 @@
+<nav class="navbar-shell">
+  <div class="navbar-top">
+    <div class="container top-content">
+      <a routerLink="/" class="brand">
+        <span class="brand-mark">K</span>
+        <span class="brand-copy">
+          <strong>KBTU</strong>
+          <small>Ticket Store</small>
+        </span>
+      </a>
+
+      <form class="header-search" (ngSubmit)="submitSearch()">
+        <span class="search-icon">⌕</span>
+        <input
+          type="text"
+          name="headerSearch"
+          [(ngModel)]="searchQuery"
+          placeholder="Search events"
+        />
+      </form>
+
+      <div class="header-actions">
+        @if (authService.currentUser()) {
+          <a routerLink="/orders" routerLinkActive="active-chip" class="action-link action-link-stacked">
+            <span class="action-icon">⌘</span>
+            <span class="action-label">My Orders</span>
+          </a>
+          <a routerLink="/settings" routerLinkActive="active-chip" class="action-link action-link-stacked">
+            <span class="action-icon">◉</span>
+            <span class="action-label">Profile</span>
+          </a>
+          @if (authService.currentUser()?.role === 'admin') {
+            <a routerLink="/manage-events" routerLinkActive="active-chip" class="action-link action-link-stacked accent-link">
+              <span class="action-icon">✦</span>
+              <span class="action-label">Manage</span>
+            </a>
+          }
+          <button class="compact-btn" type="button" (click)="logout()">Logout</button>
+        } @else {
+          <a routerLink="/login" class="compact-btn compact-btn-outline">Login</a>
+          <a routerLink="/register" class="compact-btn">Register</a>
+        }
+        <button class="theme-toggle" type="button" (click)="themeService.toggleTheme()" title="Toggle Theme">
+          {{ themeService.isDarkTheme() ? '☀' : '☾' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="navbar-bottom">
+    <div class="container category-row">
+      @for (item of navCategories; track item.label) {
+        <a
+          [routerLink]="item.route"
+          [queryParams]="item.query"
+          routerLinkActive="active-category"
+          class="category-link"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </div>
+  </div>
+</nav>

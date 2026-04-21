@@ -1,0 +1,89 @@
+<section class="catalog-shell">
+  <div class="container">
+    <div class="catalog-head">
+      <div>
+        <p class="eyebrow">Browse</p>
+        <h2>All Events</h2>
+      </div>
+      <div class="catalog-actions">
+        <button type="button" class="btn btn-secondary" (click)="resetFilters()">All Events</button>
+        <p class="results-copy">{{ events.length }} events available</p>
+      </div>
+    </div>
+
+    <!-- <div class="search-bar mb-4">
+      <form (ngSubmit)="searchEvents()" class="search-form">
+        <div class="form-group flex-grow search-input-wrap">
+          <span class="field-icon">⌕</span>
+          <input type="text" [(ngModel)]="searchQuery" name="query" placeholder="Search events by title or description..." class="form-control" />
+        </div>
+        <div class="form-group category-select">
+          <select [(ngModel)]="selectedCategory" name="category" class="form-control">
+            <option value="">All Categories</option>
+            @for (cat of categories; track cat.slug) {
+              <option [value]="cat.slug">{{ cat.name }}</option>
+            }
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div> -->
+
+    <div class="date-strip mb-4">
+      <div class="date-scroll">
+        @for (day of calendarDays; track day.iso) {
+          <button
+            type="button"
+            class="date-chip"
+            [class.date-chip-active]="selectedDate === day.iso"
+            [class.date-chip-weekend]="day.weekend && selectedDate !== day.iso"
+            (click)="selectDate(day.iso)"
+          >
+            <span class="month-label">{{ day.monthLabel }}</span>
+            <span class="day-number">{{ day.day }}</span>
+            <span class="weekday">{{ day.weekday }}</span>
+          </button>
+        }
+      </div>
+      <button type="button" class="calendar-badge" (click)="resetFilters()" title="Clear date filter">
+        <span class="calendar-icon">🗓</span>
+      </button>
+    </div>
+
+    @if (errorMessage) {
+      <div class="error-alert">{{ errorMessage }}</div>
+    }
+
+    <div class="events-grid">
+      @for (event of events; track event.id) {
+        <article class="event-card">
+          <a [routerLink]="['/events', event.id]" class="poster-link">
+            <div class="card-img" [style.background-image]="'linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.42)), url(' + (event.image ? event.image : '/assets/placeholder.jpg') + ')'">
+              <span class="age-tag">12+</span>
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-copy">
+              <div class="category-badge">{{ event.category.name }}</div>
+              <h3 class="card-title">{{ event.title }}</h3>
+              <p class="card-date">{{ event.date | date:'medium' }}</p>
+            </div>
+            <div class="price-stack">
+              <div class="cashback-pill">
+                From {{ event.price | currency:'KZT':'symbol-narrow' }}
+                <small>{{ event.available_seats }} seats left</small>
+              </div>
+              <div class="base-price">Base price {{ event.price | currency:'KZT':'symbol-narrow' }}</div>
+            </div>
+          </div>
+        </article>
+      }
+      @if (events.length === 0 && !errorMessage) {
+        <div class="no-results">
+          <h3>No events found</h3>
+          <p>Try adjusting your search filters.</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

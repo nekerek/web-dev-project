@@ -1,0 +1,50 @@
+<div class="container mt-4 mb-5">
+      <h2 class="mb-4">My Orders</h2>
+
+      @if (actionMessage) {
+        <div class="success-alert">{{ actionMessage }}</div>
+      }
+
+      @if (isLoading) {
+        <div class="text-center p-4">Loading orders...</div>
+      } @else if (errorMessage) {
+        <div class="error-alert">{{ errorMessage }}</div>
+      } @else if (orders.length === 0) {
+        <div class="no-orders text-center">
+          <h3>You have no orders yet</h3>
+          <p>Browse our events and book your first ticket!</p>
+          <a routerLink="/events" class="btn btn-primary mt-3">Browse Events</a>
+        </div>
+      } @else {
+        <div class="orders-list">
+          @for (order of orders; track order.id) {
+            <div class="order-card" [class.cancelled]="order.status === 'cancelled'">
+              <div class="order-header">
+                <div>
+                  <span class="order-id">Order #{{ order.id }}</span>
+                  <span class="order-date">{{ order.created_at | date:'medium' }}</span>
+                </div>
+                <div class="status-badge" [ngClass]="'status-' + order.status">
+                  {{ order.status | uppercase }}
+                </div>
+              </div>
+              <div class="order-body">
+                <div class="event-info">
+                  <h4>{{ order.event.title }}</h4>
+                  <p class="text-muted">{{ order.event.location }} | {{ order.event.date | date:'short' }}</p>
+                </div>
+                <div class="order-details text-right">
+                  <p><strong>Quantity:</strong> {{ order.quantity }} ticket(s)</p>
+                  <p class="total-price"><strong>Total:</strong> {{ order.total_price | currency:'KZT':'symbol-narrow' }}</p>
+                </div>
+              </div>
+              @if (order.status !== 'cancelled') {
+                <div class="order-footer">
+                  <button class="btn btn-danger btn-sm" (click)="cancelOrder(order.id)">Cancel Order</button>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
