@@ -1,0 +1,254 @@
+{
+  "info": {
+    "name": "KBTU Event Ticket Store API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://127.0.0.1:8000/api" },
+    { "key": "accessToken", "value": "" },
+    { "key": "refreshToken", "value": "" },
+    { "key": "eventId", "value": "1" },
+    { "key": "orderId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"student1\",\n  \"email\": \"student1@kbtu.kz\",\n  \"password\": \"student1234\",\n  \"role\": \"user\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/register/"
+      },
+      "response": [{
+        "name": "201 example",
+        "body": "{\n  \"refresh\": \"refresh-token\",\n  \"access\": \"access-token\",\n  \"user\": {\n    \"id\": 7,\n    \"username\": \"student1\",\n    \"email\": \"student1@kbtu.kz\",\n    \"role\": \"user\"\n  }\n}"
+      }]
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"student1\",\n  \"password\": \"student1234\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/login/"
+      },
+      "response": [{
+        "name": "200 example",
+        "body": "{\n  \"refresh\": \"refresh-token\",\n  \"access\": \"access-token\",\n  \"user\": {\n    \"id\": 7,\n    \"username\": \"student1\",\n    \"email\": \"student1@kbtu.kz\"\n  }\n}"
+      }]
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"refresh\": \"{{refreshToken}}\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/logout/"
+      },
+      "response": [{
+        "name": "205 example",
+        "body": "{\n  \"message\": \"Successfully logged out\"\n}"
+      }]
+    },
+    {
+      "name": "Refresh Token",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"refresh\": \"{{refreshToken}}\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/refresh/"
+      },
+      "response": [{
+        "name": "200 example",
+        "body": "{\n  \"access\": \"new-access-token\"\n}"
+      }]
+    },
+    {
+      "name": "Get Profile",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+        "url": "{{baseUrl}}/auth/profile/"
+      },
+      "response": [{
+        "name": "200 example",
+        "body": "{\n  \"id\": 7,\n  \"username\": \"student1\",\n  \"email\": \"student1@kbtu.kz\",\n  \"first_name\": \"Ayan\",\n  \"last_name\": \"Student\",\n  \"phone\": \"+77010000000\",\n  \"role\": \"user\",\n  \"email_notifications\": true,\n  \"event_reminders\": true,\n  \"marketing_updates\": false,\n  \"preferred_category_id\": 2,\n  \"preferred_category_name\": \"Concerts\"\n}"
+      }]
+    },
+    {
+      "name": "Update Profile Settings",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"student1@kbtu.kz\",\n  \"first_name\": \"Ayan\",\n  \"last_name\": \"Student\",\n  \"phone\": \"+77010000000\",\n  \"email_notifications\": true,\n  \"event_reminders\": true,\n  \"marketing_updates\": true,\n  \"preferred_category_id\": 2\n}"
+        },
+        "url": "{{baseUrl}}/auth/profile/"
+      },
+      "response": [{
+        "name": "200 example",
+        "body": "{\n  \"id\": 7,\n  \"username\": \"student1\",\n  \"email\": \"student1@kbtu.kz\",\n  \"first_name\": \"Ayan\",\n  \"last_name\": \"Student\",\n  \"phone\": \"+77010000000\",\n  \"role\": \"user\",\n  \"email_notifications\": true,\n  \"event_reminders\": true,\n  \"marketing_updates\": true,\n  \"preferred_category_id\": 2,\n  \"preferred_category_name\": \"Concerts\"\n}"
+      }]
+    },
+    {
+      "name": "List Categories",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/categories/"
+      },
+      "response": [{
+        "name": "200 example",
+        "body": "[\n  {\"id\": 1, \"name\": \"Cinema\", \"slug\": \"cinema\", \"description\": \"Movie screenings\"},\n  {\"id\": 2, \"name\": \"Concerts\", \"slug\": \"concerts\", \"description\": \"Live music events\"}\n]"
+      }]
+    },
+    {
+      "name": "Search Events",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/events/search/?q=tour&category=concerts"
+      },
+      "response": [{
+        "name": "200 example",
+        "body": "[\n  {\n    \"id\": 1,\n    \"title\": \"Campus Spring Concert\",\n    \"description\": \"Live show in the main hall\",\n    \"date\": \"2026-05-03T18:00:00Z\",\n    \"location\": \"Main Hall\",\n    \"price\": \"5000.00\",\n    \"total_seats\": 200,\n    \"available_seats\": 145,\n    \"category\": {\"id\": 2, \"name\": \"Concerts\", \"slug\": \"concerts\", \"description\": \"Live music events\"},\n    \"organization\": \"Student Council\",\n    \"is_active\": true\n  }\n]"
+      }]
+    },
+    {
+      "name": "Create Event",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "title", "value": "Campus Spring Concert", "type": "text" },
+            { "key": "category_id", "value": "2", "type": "text" },
+            { "key": "description", "value": "Live show in the main hall", "type": "text" },
+            { "key": "date", "value": "2026-05-03T18:00:00Z", "type": "text" },
+            { "key": "location", "value": "Main Hall", "type": "text" },
+            { "key": "price", "value": "5000.00", "type": "text" },
+            { "key": "total_seats", "value": "200", "type": "text" },
+            { "key": "organization", "value": "Student Council", "type": "text" },
+            { "key": "is_active", "value": "true", "type": "text" }
+          ]
+        },
+        "url": "{{baseUrl}}/events/"
+      },
+      "response": [{
+        "name": "201 example",
+        "body": "{\n  \"id\": 11,\n  \"title\": \"Campus Spring Concert\",\n  \"available_seats\": 200,\n  \"is_active\": true\n}"
+      }]
+    },
+    {
+      "name": "Update Event",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "title", "value": "Campus Spring Concert Updated", "type": "text" },
+            { "key": "category_id", "value": "2", "type": "text" },
+            { "key": "description", "value": "Updated description", "type": "text" },
+            { "key": "date", "value": "2026-05-03T18:00:00Z", "type": "text" },
+            { "key": "location", "value": "Main Hall", "type": "text" },
+            { "key": "price", "value": "5500.00", "type": "text" },
+            { "key": "total_seats", "value": "200", "type": "text" },
+            { "key": "organization", "value": "Student Council", "type": "text" },
+            { "key": "is_active", "value": "true", "type": "text" }
+          ]
+        },
+        "url": "{{baseUrl}}/events/{{eventId}}/"
+      },
+      "response": [{
+        "name": "200 example",
+        "body": "{\n  \"id\": 11,\n  \"title\": \"Campus Spring Concert Updated\",\n  \"price\": \"5500.00\"\n}"
+      }]
+    },
+    {
+      "name": "Delete Event",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+        "url": "{{baseUrl}}/events/{{eventId}}/"
+      },
+      "response": [{
+        "name": "204 example",
+        "body": ""
+      }]
+    },
+    {
+      "name": "Create Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event_id\": {{eventId}},\n  \"quantity\": 2\n}"
+        },
+        "url": "{{baseUrl}}/orders/"
+      },
+      "response": [{
+        "name": "201 example",
+        "body": "{\n  \"id\": 15,\n  \"quantity\": 2,\n  \"total_price\": \"11000.00\",\n  \"status\": \"pending\"\n}"
+      }]
+    },
+    {
+      "name": "List My Orders",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+        "url": "{{baseUrl}}/orders/"
+      },
+      "response": [{
+        "name": "200 example",
+        "body": "[\n  {\n    \"id\": 15,\n    \"quantity\": 2,\n    \"total_price\": \"11000.00\",\n    \"status\": \"pending\"\n  }\n]"
+      }]
+    },
+    {
+      "name": "Cancel Order",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+        "url": "{{baseUrl}}/orders/{{orderId}}/"
+      },
+      "response": [{
+        "name": "204 example",
+        "body": ""
+      }]
+    },
+    {
+      "name": "Get Notifications",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+        "url": "{{baseUrl}}/notifications/"
+      },
+      "response": [{
+        "name": "200 example",
+        "body": "[\n  {\n    \"id\": \"order-15\",\n    \"title\": \"Order #15 pending\",\n    \"message\": \"Your order for \\\"Campus Spring Concert\\\" is currently pending. Total paid: 11000.00 KZT.\",\n    \"kind\": \"order\",\n    \"created_at\": \"2026-04-22T10:30:00Z\",\n    \"is_read\": false,\n    \"action_label\": \"View order\",\n    \"action_route\": \"/orders\"\n  }\n]"
+      }]
+    }
+  ]
+}

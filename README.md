@@ -25,3 +25,19 @@ Campus Marketplace is a web application built with Angular and Django REST Frame
 ```text
 frontend/   # Angular application
 backend/    # Django backend
+```
+
+## Run Locally
+Backend:
+```bash
+cd backend
+venv\Scripts\python.exe manage.py migrate
+venv\Scripts\python.exe manage.py runserver
+```
+
+Frontend:
+```bash
+cd frontend
+npm.cmd start
+```
+
